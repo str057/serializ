@@ -1,5 +1,48 @@
 from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
 from users.models import Payment, User
+
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, validators=[validate_password])
+    password_confirm = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            "email",
+            "password",
+            "password_confirm",
+            "first_name",
+            "last_name",
+            "phone",
+            "city",
+        ]
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password_confirm"]:
+            raise serializers.ValidationError({"password": "Пароли не совпадают"})
+        return attrs
+
+    def create(self, validated_data):
+        validated_data.pop("password_confirm")
+        user = User.objects.create_user(**validated_data)
+        return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "city",
+            "avatar",
+            "date_joined",
+        ]
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -53,6 +96,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     payment_history = PaymentHistorySerializer(
         many=True, read_only=True, source="payments"
     )
+    is_moderator = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -65,5 +109,25 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "city",
             "avatar",
             "date_joined",
+            "is_moderator",
             "payment_history",
+        ]
+        read_only_fields = ["email", "date_joined", "is_moderator"]
+
+    def get_is_moderator(self, obj):
+        return obj.groups.filter(name="moderators").exists()
+
+
+class UserProfilePublicSerializer(serializers.ModelSerializer):
+    """Сериализатор для публичного просмотра профиля"""
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "first_name",
+            "city",
+            "avatar",
+            "date_joined",
         ]
