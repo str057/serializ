@@ -1,3 +1,4 @@
+
 [flake8]
 exclude =
     venv,
@@ -8,3 +9,4 @@ exclude =
     __pycache__,
     *.pyc
 max-line-length = 88
+

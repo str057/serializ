@@ -44,6 +44,7 @@ class Lesson(models.Model):
         related_name="lessons",
     )
 
+
     class Meta:
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"

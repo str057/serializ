@@ -57,6 +57,8 @@ class Command(BaseCommand):
                     )
                     payments_created += 1
 
+
+
         self.stdout.write(
             self.style.SUCCESS(f"Успешно создано {payments_created} тестовых платежей")
         )

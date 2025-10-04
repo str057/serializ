@@ -128,6 +128,8 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
         return User.objects.get(pk=pk)
 
 
+
+
 class LoginView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
 

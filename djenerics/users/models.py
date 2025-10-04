@@ -6,6 +6,8 @@ from django.core.exceptions import ValidationError
 from users.managers import CustomUserManager
 
 
+
+
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
