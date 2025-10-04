@@ -16,5 +16,3 @@ class Command(BaseCommand):
             )
         else:
             self.stdout.write(self.style.WARNING("ℹ️ Группа модераторов уже существует"))
-
-

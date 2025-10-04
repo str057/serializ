@@ -118,8 +118,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return obj.groups.filter(name="moderators").exists()
 
 
-
-
 class UserProfilePublicSerializer(serializers.ModelSerializer):
     """Сериализатор для публичного просмотра профиля"""
 

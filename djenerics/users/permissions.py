@@ -21,8 +21,6 @@ class IsNotModerator(permissions.BasePermission):
         )
 
 
-
-
 class IsOwner(permissions.BasePermission):
     """Проверяет, является ли пользователь владельцем объекта"""
 

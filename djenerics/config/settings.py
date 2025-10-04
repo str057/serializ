@@ -10,8 +10,6 @@ SECRET_KEY = "django-insecure-!nuw&bf&_ws^n#ib#jvm*m!*)%sj-8!q!2kha#5l1ax(y$7e_4
 DEBUG = True
 
 
-
-
 AUTH_USER_MODEL = "users.User"
 
 INSTALLED_APPS = [
